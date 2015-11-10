@@ -2,5 +2,5 @@ en:
   lita:
     handlers:
       tell_on_wake:
-        success_enqueue: "Ok! I'll tell this to %{user_name} as soon as he wakes up :)"
+        success_enqueue: "Ok! I'll tell this to %{user_name} as soon as they wake up :)"
         tell: "Hey! %{user} asked me to tell you: %{message} at %{time}"

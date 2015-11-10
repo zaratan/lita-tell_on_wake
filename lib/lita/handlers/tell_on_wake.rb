@@ -3,7 +3,6 @@ module Lita
     class TellOnWake < Handler
       attr_accessor :response
 
-      # insert handler code here
       route(//, :send_tell)
       on(:user_joined_room, :send_tell)
 
@@ -28,7 +27,8 @@ module Lita
       end
 
       def user_list(name=nil)
-        Redis::List.new(name || user_find.name, redis, marshal: true)
+        name = name.downcase if name
+        Redis::List.new(name || user_find.name.downcase, redis, marshal: true)
       end
 
       def add_to_user_list(name, message)

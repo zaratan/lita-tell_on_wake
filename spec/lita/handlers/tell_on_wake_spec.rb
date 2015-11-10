@@ -31,7 +31,7 @@ describe Lita::Handlers::TellOnWake, lita_handler: true do
 
   it "stores tell messages for later" do
     subject
-    expect(redis_list(user.name).first).to eq({message: "I love you", user: sender.name, time: now.to_s})
+    expect(redis_list(user.name.downcase).first).to eq({message: "I love you", user: sender.name, time: now.to_s})
   end
 
   it "stores message on unexisting user" do
@@ -50,7 +50,7 @@ describe Lita::Handlers::TellOnWake, lita_handler: true do
 
     context "a tell message for that user is stored" do
       before do
-        redis_list(user.name) << {message: "message 1", user: sender.name, time: now.to_s}
+        redis_list(user.name.downcase) << {message: "message 1", user: sender.name, time: now.to_s}
       end
 
       it "sends privately this message for that user" do
@@ -60,8 +60,8 @@ describe Lita::Handlers::TellOnWake, lita_handler: true do
 
     context "more than one message is stored" do
       before do
-        redis_list(user.name) << {message: "message 1", user: sender.name, time: now.to_s}
-        redis_list(user.name) << {message: "message 2", user: sender.name, time: now.to_s}
+        redis_list(user.name.downcase) << {message: "message 1", user: sender.name, time: now.to_s}
+        redis_list(user.name.downcase) << {message: "message 2", user: sender.name, time: now.to_s}
       end
 
       it "sends them in the right order" do

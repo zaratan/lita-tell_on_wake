@@ -1,6 +1,6 @@
 # lita-tell_on_wake
 
-TODO: Add a description of the plugin.
+Allow you to enqueue a message for the next time a user act.
 
 ## Installation
 
@@ -10,10 +10,6 @@ Add lita-tell_on_wake to your Lita instance's Gemfile:
 gem "lita-tell_on_wake"
 ```
 
-## Configuration
-
-TODO: Describe any configuration attributes the plugin exposes.
-
 ## Usage
 
-TODO: Describe the plugin's features and how to use them.
+!tell somebody something => enqueue something for somebody

@@ -1,7 +1,43 @@
 module Lita
   module Handlers
     class TellOnWake < Handler
+      attr_accessor :response
+
       # insert handler code here
+      route(//, :send_tell)
+      on(:user_joined_room, :send_tell)
+
+      def send_tell(r)
+        @response = r
+        @user_name = r.user.name
+        user_list.each do |tell|
+          r.reply_privately(t("tell", message: tell[:message], user: tell[:user], time: tell[:time]))
+        end
+        user_list.clear
+      end
+
+      route(/^tell\s+(?<user>\S+)\s+(?<message>\S.*)/, :store_tell, command: true, help:{
+        "tell somebody something" => "Tell something to somebody as soon as he acts again"
+      })
+      
+      def store_tell(r)
+        @response = r
+        @user_name = r.match_data[:user]
+        add_to_user_list(r.match_data[:message])
+        r.reply(t("success_enqueue", user_name: @user_name))
+      end
+
+      def user_list
+        Redis::List.new(user_find.name, redis, marshal: true)
+      end
+
+      def add_to_user_list(message)
+        user_list << {message: message, user: response.user.name, time: Time.now.to_s}
+      end
+
+      def user_find
+        @user_find ||= User.fuzzy_find(@user_name)
+      end
 
       Lita.register_handler(self)
     end

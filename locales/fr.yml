@@ -1,0 +1,6 @@
+fr:
+  lita:
+    handlers:
+      tell_on_wake:
+        success_enqueue: "Ok! Je dirai ça à %{user_name} dès qu'il se reveillera :)"
+        tell: "Hey! %{user} m'a demandé de te dire: %{message} à %{time}"

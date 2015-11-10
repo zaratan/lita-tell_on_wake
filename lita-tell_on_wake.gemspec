@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "lita-tell_on_wake"
-  spec.version       = "0.1.2"
+  spec.version       = "0.1.3"
   spec.authors       = ["Zaratan"]
   spec.email         = ["denis.pasin@gmail.com"]
   spec.description   = "A plugin to enqueue messages for someone"

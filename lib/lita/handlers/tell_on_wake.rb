@@ -28,7 +28,7 @@ module Lita
       end
 
       def user_list(name=nil)
-        Redis::List.new(name || user_find.name, redis, marshal: true)
+        Redis::List.new(name.downcase || user_find.name.downcase, redis, marshal: true)
       end
 
       def add_to_user_list(name, message)

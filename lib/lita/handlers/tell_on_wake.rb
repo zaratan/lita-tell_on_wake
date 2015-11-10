@@ -23,16 +23,16 @@ module Lita
       def store_tell(r)
         @response = r
         @user_name = r.match_data[:user]
-        add_to_user_list(r.match_data[:message])
+        add_to_user_list(@user_name, r.match_data[:message])
         r.reply(t("success_enqueue", user_name: @user_name))
       end
 
-      def user_list
-        Redis::List.new(user_find.name, redis, marshal: true)
+      def user_list(name=nil)
+        Redis::List.new(name || user_find.name, redis, marshal: true)
       end
 
-      def add_to_user_list(message)
-        user_list << {message: message, user: response.user.name, time: Time.now.to_s}
+      def add_to_user_list(name, message)
+        user_list(name) << {message: message, user: response.user.name, time: Time.now.to_s}
       end
 
       def user_find

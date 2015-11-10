@@ -34,6 +34,11 @@ describe Lita::Handlers::TellOnWake, lita_handler: true do
     expect(redis_list(user.name).first).to eq({message: "I love you", user: sender.name, time: now.to_s})
   end
 
+  it "stores message on unexisting user" do
+    send_command("tell blu youpi", as: sender)
+    expect(redis_list("blu")).not_to be_empty
+  end
+
   it "responds a succesfull message" do
     expect{subject}.to change{replies}.to([mod.t("success_enqueue", user_name: user.name)])
   end
